@@ -35,6 +35,16 @@ namespace 會計
             XElement xe = XElement.Load("Client.xml");
             if (ID != null)
             {
+                var Lst = (from m in xe.Elements()
+                           where m.Element("Name").Value == ID
+                           select m).FirstOrDefault();
+                Lst.Element("Name").Value=txtName.Text;
+                Lst.Element("Address").Value =txtAddress.Text;
+                Lst.Element("Num").Value = txtNum.Text ;
+                Lst.Element("Person").Value=txtPerson.Text ;
+                Lst.Element("Phone").Value= txtPhone.Text;
+                xe.Save("Client.xml");
+                MessageBox.Show("編輯成功");
 
             }
             else
@@ -57,7 +67,19 @@ namespace 會計
 
         private void NewClient_Load(object sender, EventArgs e)
         {
-            
+            XElement xe = XElement.Load("Client.xml");
+            if (ID != null)
+            {
+                var Lst = (from m in xe.Elements()
+                          where m.Element("Name").Value == ID
+                          select m).FirstOrDefault();
+                txtName.Text = Lst.Element("Name").Value;
+                txtAddress.Text = Lst.Element("Address").Value;
+                txtNum.Text = Lst.Element("Num").Value;
+                txtPerson.Text = Lst.Element("Person").Value;
+                txtPhone.Text = Lst.Element("Phone").Value;
+
+            }
         }
     }
 }
